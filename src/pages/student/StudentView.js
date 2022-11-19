@@ -1,23 +1,24 @@
-import React, { memo, useEffect, useMemo, useCallback } from 'react';
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import React, { memo, useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteItem, getCurrentData, getItem } from '../../slices/ProfessorSlice';
-
-import Spinner from '../../components/Spinner';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import ErrorView from '../../components/ErrorView';
+import Spinner from '../../components/Spinner';
 import Table from '../../components/Table';
+import { deleteItem, getCurrentData } from '../../slices/StudentSlice';
+import { getItem } from '../../slices/StudentSlice';
 
-const ProfessorView = () => {
+
+const StudentView = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector(state => state.ProfessorSlice);
+    const { data, loading, error } = useSelector(state => state.StudentSlice);
 
     useEffect(() => {
         dispatch(getCurrentData());
-    }, []);
+    }, [dispatch]);
 
-    const item = useMemo((e) => {
+    const item = useMemo(() => {
         if (data) {
             return data.find(v => v.id == id);
         } else {
@@ -25,14 +26,13 @@ const ProfessorView = () => {
         }
     }, [data]);
 
-    const onClickDelete = useCallback(e => {
+    const onClick = useCallback(e => {
         e.preventDefault();
         const { id, name } = e.currentTarget.dataset;
         if (window.confirm(`정말 ${name}을 삭제하겠습니까?`)) {
-            dispatch(deleteItem({ id })).then(() => { navigate(`/professorlist`) });
+            dispatch(deleteItem({ id })).then(() => { navigate(`/studentlist`) });
         }
     }, []);
-
 
     return (
         <>
@@ -46,6 +46,10 @@ const ProfessorView = () => {
                             </colgroup>
                             <tbody>
                                 <tr>
+                                    <th>id</th>
+                                    <td>{item.id}</td>
+                                </tr>
+                                <tr>
                                     <th>name</th>
                                     <td>{item.name}</td>
                                 </tr>
@@ -54,35 +58,47 @@ const ProfessorView = () => {
                                     <td>{item.userid}</td>
                                 </tr>
                                 <tr>
-                                    <th>position</th>
-                                    <td>{item.position}</td>
+                                    <th>grade</th>
+                                    <td>{item.grade}</td>
                                 </tr>
                                 <tr>
-                                    <th>sal</th>
-                                    <td>{item.sal}</td>
+                                    <th>idnum</th>
+                                    <td>{item.idnum}</td>
                                 </tr>
                                 <tr>
-                                    <th>hiredate</th>
-                                    <td>{(item.hiredate).substring(0, 10)}</td>
+                                    <th>birthdate</th>
+                                    <td>{(item.birthdate).substring(0, 10)}</td>
                                 </tr>
                                 <tr>
-                                    <th>comm</th>
-                                    <td>{item.comm}</td>
+                                    <th>tel</th>
+                                    <td>{item.tel}</td>
+                                </tr>
+                                <tr>
+                                    <th>height</th>
+                                    <td>{item.height}</td>
+                                </tr>
+                                <tr>
+                                    <th>weight</th>
+                                    <td>{item.weight}</td>
                                 </tr>
                                 <tr>
                                     <th>deptno</th>
                                     <td>{item.deptno}</td>
                                 </tr>
+                                <tr>
+                                    <th>profno</th>
+                                    <td>{item.profno}</td>
+                                </tr>
                             </tbody>
                         </Table>
                         <div style={{ textAlign: 'center' }}>
-                            <NavLink to='/professorList'>목록</NavLink>
+                            <NavLink to='/studentlist'>목록</NavLink>
                             &nbsp; | &nbsp;
-                            <NavLink to='/professorAdd'>등록</NavLink>
+                            <NavLink to='/studentAdd'>등록</NavLink>
                             &nbsp; | &nbsp;
-                            <NavLink to={`/professorEdit/${item.id}`}>수정</NavLink>
+                            <NavLink to={`/studentEdit/${item.id}`}>수정</NavLink>
                             &nbsp; | &nbsp;
-                            <NavLink to='/#!' data-id={item.id} data-name={item.name} onClick={onClickDelete}>삭제</NavLink>
+                            <NavLink to='/#!' data-id={item.id} data-name={item.name} onClick={onClick}>삭제</NavLink>
                         </div>
                     </>
                 )
@@ -91,4 +107,4 @@ const ProfessorView = () => {
     );
 };
 
-export default memo(ProfessorView);
+export default memo(StudentView);

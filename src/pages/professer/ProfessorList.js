@@ -129,7 +129,7 @@ const ProfessorList = () => {
                                             </td>
                                         </tr>
                                     );
-                                })) : (<tr><td colSpan='5' align='center'>검색결과가 없습니다.</td></tr>)
+                                })) : (<tr><td colSpan='7' align='center'>검색결과가 없습니다.</td></tr>)
                             }
                         </tbody>
                     </Table>

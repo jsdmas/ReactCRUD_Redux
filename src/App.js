@@ -9,6 +9,10 @@ import ProfessorAdd from './pages/professer/ProfessorAdd';
 import ProfessorEdit from './pages/professer/ProfessorEdit';
 
 import StudentList from './pages/student/StudentList';
+import StudentView from './pages/student/StudentView';
+import StudentAdd from './pages/student/StudentAdd';
+import StudentEdit from './pages/student/StudentEdit';
+
 import TrafficAccList from './pages/traffic_acc/TrafficAccList';
 
 const App = () => {
@@ -27,6 +31,10 @@ const App = () => {
         <Route path='/professorEdit/:id' element={<ProfessorEdit />} />
 
         <Route path='/studentlist' element={<StudentList />} />
+        <Route path='/studentAdd' element={<StudentAdd />} />
+        <Route path='/studentView/:id' element={<StudentView />} />
+        <Route path='/studentEdit/:id' element={<StudentEdit />} />
+
         <Route path='/trafficacclist' element={<TrafficAccList />} />
       </Routes>
 
